@@ -1,1 +1,1 @@
-# my-unix-configs
+# Dotfiles of everything I use

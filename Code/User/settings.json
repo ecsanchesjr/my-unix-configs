@@ -1,0 +1,12 @@
+{
+    "editor.fontFamily": "monospace",
+    "editor.tabSize": 3,
+    "editor.fontSize": 16,
+    "C_Cpp.clang_format_style": "WebKit",
+    "C_Cpp.clang_format_sortIncludes": true,
+    "editor.minimap.enabled": false,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "Dracula Soft",
+    "editor.fontWeight": "normal",
+    "window.zoomLevel": 0.25
+}
