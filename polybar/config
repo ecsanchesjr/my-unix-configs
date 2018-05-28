@@ -1,0 +1,200 @@
+[colors]
+background = #002a252c
+foreground = #fff
+background-bot = #9a263b45
+foreground-bot = #fff
+icons = #149fd8
+i3-background-focused = #14181d
+
+[bar/top]
+height = 20
+width = 100%
+#override-redirect = true
+offset-y = 0
+radius = 0
+background = ${colors.background}
+foreground = ${colors.foreground}
+line-size = 3
+line-color = #f00
+border-size = 0
+padding-left = 1%
+padding-right = 1%
+module-margin-left = 1
+module-margin-right = 1
+font-0 = Hack:size=10;3
+font-1 = FontAwesome:size=12;3
+separator = 
+#fixed-center = false
+modules-left = redshift-control i3
+modules-center = time date
+modules-right = pulseaudio-tail backlight wireless-network battery powermenu
+
+[bar/bot]
+bottom = true
+width = 100%
+height = 20
+offset-y = 0
+radius = 0
+background = ${colors.background-bot}
+foreground = ${colors.foreground-bot}
+line-size = 3
+line-color = #f00
+border-size = 0
+padding-left = 1%
+padding-right = 1%
+module-margin-left = 1
+module-margin-right = 1
+font-0 = Hack:size=11;3
+font-1 = FontAwesome:size=12;2
+separator = "  "
+modules-left = 
+modules-center = cpu-frequency filesystem-py memory
+modules-right = 
+
+[module/i3]
+type = internal/i3
+enable-click = true
+label-unfocused = %index%
+label-unfocused-padding = 1
+label-focused = %index% 
+label-focused-foreground = ${colors.foreground}
+label-focused-background = ${colors.icons}
+label-focused-padding = 1
+
+#ws-icon-0 = 1;â™š
+#ws-icon-1 = 2;â™›
+#ws-icon-2 = 3;â™œ
+#ws-icon-3 = 4;â™
+#ws-icon-8 = 8;
+#ws-icon-default = â™Ÿ
+
+[module/memory]
+type = internal/memory
+interval = 1
+format-prefix = " "
+format-prefix-foreground = ${colors.icons}
+label = %gb_used%
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+format-charging = <ramp-capacity> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%%
+label-charging = %percentage%%
+ramp-capacity-foreground = ${colors.icons}
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+[module/backlight]
+type = internal/xbacklight
+enable-scroll = true
+format-prefix = " "
+format-prefix-foreground = ${colors.icons} 
+format = <label>
+label = %percentage%%
+
+[module/date]
+type = internal/date
+interval = 100
+date = %d/%m 
+label = %date%
+format-prefix = " "
+format-prefix-foreground = ${colors.icons}
+format = <label>
+
+[module/time]
+type = internal/date
+interval = 1
+time = %H:%M
+format-prefix = " "
+format-prefix-foreground = ${colors.icons}
+label = %time%  
+
+[module/pulseaudio-tail]
+type = custom/script
+exec = ~/scripts/polybar/pulseaudio-tail/pulseaudio-tail.sh
+tail = true
+click-right = exec pavucontrol &
+click-left = ~/scripts/polybar/pulseaudio-tail/pulseaudio-tail.sh --mute
+scroll-up = ~/scripts/polybar/pulseaudio-tail/pulseaudio-tail.sh --up
+scroll-down = ~/scripts/polybar/pulseaudio-tail/pulseaudio-tail.sh --down
+format-prefix = " "
+format-prefix-foreground = ${colors.icons}
+
+[module/wireless-network]
+type = internal/network
+interface = wlp2s0
+interval = 3
+label-connected = %essid%
+format-connected = <ramp-signal> <label-connected>
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-5 = 
+ramp-signal-foreground = ${colors.icons}
+
+[module/powermenu]
+type = custom/menu
+
+label-open = ""
+label-open-font = 4
+label-open-foreground = ${colors.icons}
+label-close = "  "
+label-close-background = #fff
+label-close-foreground = ${colors.icons}
+label-separator = "|"
+; reboot
+menu-0-0 = "  "
+menu-0-0-exec = reboot now
+menu-0-0-foreground = ${colors.icons}
+; shutdown
+menu-0-1 = "  "
+menu-0-1-exec = shutdown now
+menu-0-1-foreground = ${colors.icons}
+
+
+[module/filesystem-py]
+type = custom/script
+exec = ~/scripts/polybar/filesystem-py/filesystem.py / /home
+tail = true
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.icons}
+label = %output%
+
+# [module/cpu-py]
+# type = custom/script
+# exec = ~/scripts/polybar/cpu-py/cpu-py.py
+# tail = true
+# format = <label>
+# interval = 1
+# format-prefix = " "
+# format-prefix-foreground = ${colors.icons}
+# label = %output%
+
+[module/cpu-frequency]
+type = custom/script
+exec = cat /proc/cpuinfo | awk -v div=1000 '/cpu MHz/ {printf "%.2fGhz ",$4/div}'
+tail = true
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.icons}
+label = %output%
+interval = 1
+
+[module/redshift-control]
+type = custom/script 
+label = " %output%"
+tail = true
+format = <label>
+interval = 1
+exec = ~/scripts/polybar/redshift-control/rS-control.sh 
+click-left = ~/scripts/polybar/redshift-control/rS-control.sh --toggle
+click-right = ~/scripts/polybar/redshift-control/rS-control.sh --toggle
